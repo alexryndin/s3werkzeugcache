@@ -36,10 +36,34 @@ class S3Cache(BaseCache):
     """
 
     def __init__(
-            self, s3_bucket, key_prefix, default_timeout=300, get_extra_args={}, put_extra_args={}, head_extra_args={}):
+            self,
+            s3_bucket,
+            key_prefix,
+            default_timeout=300,
+            get_extra_args={},
+            put_extra_args={},
+            head_extra_args={},
+            region_name=None,
+            api_version=None,
+            use_ssl=True,
+            verify=None,
+            endpoint_url=None,
+            aws_access_key_id=None,
+            aws_secret_access_key=None,
+            aws_session_token=None,
+            config=None
+            ):
         self.default_timeout = default_timeout
 
-        self.s3_client = boto3.client('s3')
+        self.s3_client = boto3.client('s3', region_name=region_name,
+                                      api_version=api_version,
+                                      use_ssl=use_ssl,
+                                      verify=verify,
+                                      endpoint_url=endpoint_url,
+                                      aws_access_key_id=aws_access_key_id,
+                                      aws_secret_access_key=aws_secret_access_key,
+                                      aws_session_token=aws_session_token,
+                                      config=config)
 
         self.bucket = s3_bucket
         self._key_prefix = key_prefix
